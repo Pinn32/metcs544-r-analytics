@@ -67,7 +67,7 @@ pie(table_gender,
 )
 
 
-# c) f/m across top 5 categories (bivariate) ----------------------------------------------
+# c) f/m across top 5 categories (bivariate) ----------------------------------
 
 # find counts of unique categories
 table_category <- table(forbes$category)
@@ -107,15 +107,27 @@ barplot(
   ylim = c(0, y_max_1c),  # avoid hard coding
   col = c("wheat", "lightblue"),
   ylab = "Frequency",
-  main = "Barplot of Gender Distribution Accross Top 5 Categories"
+  main = "Barplot of Gender Distribution Across Top 5 Categories"
 )
 
 
 # d) inferences ---------------------------------------------------------------
 
+# According to Figure 1, the United States stands out significantly with 
+# a far greater count of billionaires (about 9 hundred) than all other 
+# countries, demonstrating its dominant possession of billionaire and worth 
+# among the world. China ranks second following the US with a significant 
+# number of billionaires (about 5 hundred) as well. 
 
+# As for Figure 2, 87% percent of these billionaires are male, which is 
+# more than 6 times that of female, showing male’s dominant status in 
+# the top-ranking rich people, as well as indicating a great 
+# gender unbalance regarding possessing huge amount of worth.
 
-
+# Moving on to Figure 3, Finance and Investments field shows the greatest 
+# number of billionaires. In the meantime, this figure also shows 
+# a huge gap between the number of male and female billionaires, 
+# where men account for the majority in all top 5 categories.
 
 
 # Part2 =======================================================================
