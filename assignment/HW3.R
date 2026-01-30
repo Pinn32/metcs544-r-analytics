@@ -6,7 +6,7 @@
 
 # Part 1 ======================================================================
 
-# initializing dataset
+# init dataset
 forbes <- read.csv("https://people.bu.edu/kalathur/datasets/forbes_10_14_2025.csv")
 head(forbes)
 
@@ -24,18 +24,25 @@ head(rich_countries)
 # sort by count descending
 sorted_countries <- sort(rich_countries, decreasing = TRUE)
 
-# 🟢find a suitable y limit
-(y_max <- ceiling(max(sorted_countries) / 100) * 100)
+# find a suitable y limit
+(y_max_1a <- ceiling(max(sorted_countries) / 100) * 100)
+
+# store default margin & modify margin
+(default_mar <- par()$mar)
+par(mar = c(9,7,4,4))
 
 # barplot
 barplot(
   sorted_countries,
-  ylim = c(0, y_max),  # 🟢
-  col = hcl(0),  # define color
-  xlab = "Countries",  # x label
+  ylim = c(0, y_max_1a),  # avoid hard coding
+  las = 2,  # par: labels perpendicular to axis
+  col = "rosybrown",  # define color
   ylab = "Count of Billionaires",  # y label
   main = "Barplot for Count of Billionaires in Rich Countries"
 )
+
+# restore defualt margin
+par(mar = default_mar)
 
 
 # b) distribution of f/m ------------------------------------------------------
@@ -82,13 +89,22 @@ head(top5cats_data)
 rownames(table_gender_cats)
 (rownames(table_gender_cats) <- c("Female", "Male"))
 
+# find max of pretty y ticks
+y_max_1c <- max(pretty(table_gender_cats))
+    # pretty function returns numeric vector of n increasing numbers
+    # which are "pretty" in decimal notation (eg. for axes ticks)
+
 # barplot
 barplot(
   table_gender_cats, 
   beside = TRUE,  # show gender groups beside each other
   legend.text = TRUE,  # show legend
-  args.legend = list(x = "topright", horiz = TRUE),
-  ylim = c(0, 500),
+  args.legend = list(
+    x = "topright",  # legend position
+    horiz = TRUE,  # horizontally arrange legend labels
+    bty = "n"  # box type of the box surrounding legend, "n" means none
+  ),
+  ylim = c(0, y_max_1c),  # avoid hard coding
   col = c("wheat", "lightblue"),
   ylab = "Frequency",
   main = "Barplot of Gender Distribution Accross Top 5 Categories"
@@ -104,7 +120,7 @@ barplot(
 
 # Part2 =======================================================================
 
-# initializing dataset
+# init dataset
 us_quarters <- read.csv("https://people.bu.edu/kalathur/datasets/us_quarters.csv")
 head(us_quarters)
 
@@ -154,7 +170,7 @@ head(us_quarters)
 
 # Part 3 ======================================================================
 
-# initializing dataset
+# init dataset
 stocks <- read.csv("https://people.bu.edu/kalathur/datasets/stocks_2024.csv")
 head(stocks)  # view the head
 
@@ -194,7 +210,7 @@ head(stocks)  # view the head
 
 # Part 4 ======================================================================
 
-# initializing dataset
+# init dataset
 scores <- read.csv("https://people.bu.edu/kalathur/datasets/scores.csv")
 head(scores)  # view the head
 
