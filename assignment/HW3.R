@@ -24,11 +24,14 @@ head(rich_countries)
 # sort by count descending
 sorted_countries <- sort(rich_countries, decreasing = TRUE)
 
+# 🟢find a suitable y limit
+(y_max <- ceiling(max(sorted_countries) / 100) * 100)
+
 # barplot
 barplot(
   sorted_countries,
-  ylim = c(0, 1000),  # 🔴[dont hard code] adapt y-axis limit to the max count
-  col = "lightblue",  # define color
+  ylim = c(0, y_max),  # 🟢
+  col = hcl(0),  # define color
   xlab = "Countries",  # x label
   ylab = "Count of Billionaires",  # y label
   main = "Barplot for Count of Billionaires in Rich Countries"
@@ -66,29 +69,30 @@ table_category <- table(forbes$category)
 (table_category <- sort(table_category, decreasing = TRUE))
 
 # find top 5 categories
-(top5_categories <- names(table_category[1:5]))
+(top5cats <- names(table_category[1:5]))
 
 # find subset of rows in top 5 categories
-my_subset1 <- subset(forbes, category == top5_categories)
-    # 🔴DONT USE == , it align two vectors by index of elements
+top5cats_data <- subset(forbes, category %in% top5cats)
+head(top5cats_data)
 
-my_subset2 <- subset(forbes, category %in% top5_categories)
-    # 🟢USE %in%
+# create bivariate table gender*categories
+(table_gender_cats <- table(top5cats_data$gender, top5cats_data$category))
 
+# change level names for gender variable
+rownames(table_gender_cats)
+(rownames(table_gender_cats) <- c("Female", "Male"))
 
-head(my_subset1)
-head(my_subset2)
-
-nrow(my_subset1)  # [1] 343
-nrow(my_subset2)  # [1] 1795
-
-top5_categories
-
-unique(my_subset1$category)
-unique(my_subset2$category)
-
-
-
+# barplot
+barplot(
+  table_gender_cats, 
+  beside = TRUE,  # show gender groups beside each other
+  legend.text = TRUE,  # show legend
+  args.legend = list(x = "topright", horiz = TRUE),
+  ylim = c(0, 500),
+  col = c("wheat", "lightblue"),
+  ylab = "Frequency",
+  main = "Barplot of Gender Distribution Accross Top 5 Categories"
+)
 
 
 # d) inferences ---------------------------------------------------------------
