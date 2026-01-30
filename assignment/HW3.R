@@ -26,8 +26,8 @@ sorted_countries <- sort(rich_countries, decreasing = TRUE)
 
 # barplot
 barplot(
-  sorted_countreis,
-  ylim = c(0, 1000),  # adapt y-axis limit to the max count
+  sorted_countries,
+  ylim = c(0, 1000),  # 🔴[dont hard code] adapt y-axis limit to the max count
   col = "lightblue",  # define color
   xlab = "Countries",  # x label
   ylab = "Count of Billionaires",  # y label
@@ -37,7 +37,7 @@ barplot(
 
 # b) distribution of f/m ------------------------------------------------------
 
-# find count of billionaires by gender
+# find counts of billionaires by gender
 (table_gender <- table(forbes$gender))
 
 # change column names
@@ -57,7 +57,36 @@ pie(table_gender,
 )
 
 
-# c) f/m across top 5 categories ----------------------------------------------
+# c) f/m across top 5 categories (bivariate) ----------------------------------------------
+
+# find counts of unique categories
+table_category <- table(forbes$category)
+
+# sort by count descending
+(table_category <- sort(table_category, decreasing = TRUE))
+
+# find top 5 categories
+(top5_categories <- names(table_category[1:5]))
+
+# find subset of rows in top 5 categories
+my_subset1 <- subset(forbes, category == top5_categories)
+    # 🔴DONT USE == , it align two vectors by index of elements
+
+my_subset2 <- subset(forbes, category %in% top5_categories)
+    # 🟢USE %in%
+
+
+head(my_subset1)
+head(my_subset2)
+
+nrow(my_subset1)  # [1] 343
+nrow(my_subset2)  # [1] 1795
+
+top5_categories
+
+unique(my_subset1$category)
+unique(my_subset2$category)
+
 
 
 
@@ -119,8 +148,7 @@ head(us_quarters)
 
 
 
-# =============================================================================
-# Part3
+# Part 3 ======================================================================
 
 # initializing dataset
 stocks <- read.csv("https://people.bu.edu/kalathur/datasets/stocks_2024.csv")
@@ -151,7 +179,7 @@ head(stocks)  # view the head
 
 
 
-# top 3 correlated stocks for each stock (use loops) --------------------------
+# top 3 correlated stocks for each stock (use loops)
 
 
 
@@ -160,8 +188,7 @@ head(stocks)  # view the head
 
 
 
-# =============================================================================
-# Part4
+# Part 4 ======================================================================
 
 # initializing dataset
 scores <- read.csv("https://people.bu.edu/kalathur/datasets/scores.csv")
